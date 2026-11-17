@@ -1,1 +1,168 @@
-<div class="frame-shell" data-local="true"> <iframe src="/wp-content/uploads/games/html5/W/worlds%20hardest%20game/" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; gamepad" allowfullscreen="" title="Play Worlds Hardest Game"></iframe> <noscript> <div style="position:absolute; inset:auto 0 0 0; text-align:center; padding:12px; background:rgba(8,11,20,0.85);"> <a href="/wp-content/uploads/games/html5/W/worlds%20hardest%20game/" style="color:#F2CB05; font-weight:700;">Open Worlds Hardest Game directly →</a> </div> </noscript> </div>
+<section id="gamearea">
+
+            
+            
+    <a href="/play/1024/the-strangers?rt=l" class="related-tab related-tab-left hide" style="margin-top: 125px; background-image: url(&quot;https://gamemedia.armorgames.com/1024/icn_feat.png&quot;); display: inline;">
+        <div class="control"><img src="https://gamemedia.armorgames.com/1024/icn_thmb.png" id="related-tab-thumb-left" class="thumb hide" alt="The Strangers" style="display: inline;"></div>
+    </a>
+    <a href="/play/1013/iron-works?rt=r" class="related-tab related-tab-right hide" style="margin-top: 125px; background-image: url(&quot;https://gamemedia.armorgames.com/1013/icn_feat.png&quot;); display: inline;">
+        <div class="control"><img src="https://gamemedia.armorgames.com/1013/icn_thmb.png" id="related-tab-thumb-right" class="thumb hide" alt="Iron Works" style="display: inline;"></div>
+    </a>
+    
+    
+    <div id="noflash" style="display: none;">
+        <h2>Your browser does not support our Flash emulator.</h2>
+        <p>Please use a modern browser such as <a href="https://www.google.com/chrome/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/">Firefox</a>, or <a href="https://www.microsoft.com/en-us/edge">Microsoft Edge</a>.</p>
+    </div>
+
+    <script>
+        if (typeof WebAssembly !== "object" || typeof WebAssembly.instantiate !== "function") {
+            document.getElementById('noflash').removeAttribute('style');
+        }
+
+        let startGame = function () {
+            document.getElementById('game-ruffle').style.removeProperty('display');
+
+            let play = function () {
+                let ids = ['gamefile', 'gamefileEmbed'];
+
+                for (let i = 0; i < ids.length; i++) {
+                    let embed = document.getElementById(ids[i]);
+
+                    if (embed && typeof embed.play === 'function' && embed.readyState >= 1) {
+                        embed.play();
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
+            if (! play()) {
+                let poll = setInterval(function () {
+                    if (play()) {
+                        clearInterval(poll);
+                    }
+                }, 100);
+            }
+        };
+
+        (function () {
+            let isPurchaseUrl = function (url) {
+                let parsed = new URL(url, window.location.href);
+                return /(^|\.)armorgames\.com$/.test(parsed.hostname)
+                    && /^\/purchase(\/|$)/.test(parsed.pathname);
+            };
+
+            let showStorefront = function (sku) {
+                if (! sku || ! window._gameId || ! window.agi || ! agi.v2 || ! agi.v2.showPurchaseModal || ! agi.v2.setVendor) {
+                    return false;
+                }
+
+                agi.v2.setVendor(agi.v2.config.vendorType.WEBSITE);
+
+                agi.v2.showPurchaseModal('/premium-storefront?sku=' + encodeURIComponent(sku) +
+                    '&gid=' + encodeURIComponent(window._gameId) + '&type=game&metadata=');
+                return true;
+            };
+
+            let nativeSubmit = HTMLFormElement.prototype.submit;
+
+            HTMLFormElement.prototype.submit = function () {
+                try {
+                    let sku = this.querySelector('[name="sku"]');
+
+                    if (isPurchaseUrl(this.action) && showStorefront(sku && sku.value)) {
+                        return;
+                    }
+                } catch (e) {}
+
+                return nativeSubmit.apply(this, arguments);
+            };
+
+            let nativeOpen = window.open;
+
+            window.open = function (url) {
+                try {
+                    if (url && isPurchaseUrl(url)) {
+                        let sku = new URL(url, window.location.href).searchParams.get('sku');
+
+                        if (showStorefront(sku)) {
+                            return null;
+                        }
+                    }
+                } catch (e) {}
+
+                return nativeOpen.apply(this, arguments);
+            };
+        })();
+    </script>
+
+    <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+
+    window.RufflePlayer.config = {
+        "allowScriptAccess": true,
+        "autoplay": "off",
+        "contextMenu": "rightClickOnly",
+        "credentialAllowList": ["https://services.armorgames.com"],
+        "unmuteOverlay": "hidden",
+        "upgradeToHttps": window.location.protocol === "https:",
+
+        "urlRewriteRules": [
+            [/^https?:\/\/rankz\.armorbot\.com\/(?:submit\/|get\/|s_b|flashcomm).*$/i, "https://armorgames.com/ruffle-sink"],
+
+            [/^https?:\/\/(?:www\.)?armorbot\.com\/mytable(?:[\/?].*)?$/i, "https://armorgames.com/"],
+            [/^https?:\/\/bot\.armorstudios\.com\/highscores\.php.*$/i, "https://armorgames.com/"],
+
+            [/^https?:\/\/(?:www\.)?armorbot\.com(?:[\/?].*)?$/i, "https://armorgames.com/ruffle-sink"],
+            [/^https?:\/\/bot\.armorstudios\.com(?:[\/?].*)?$/i, "https://armorgames.com/ruffle-sink"],
+
+            [/^https?:\/\/rankz\.armorbot\.com(?:[\/?].*)?$/i, "https://armorgames.com/"],
+
+            [/^https?:\/\/stats\.ironhidegames\.com(?:[\/?].*)?$/i, "https://armorgames.com/ruffle-sink"],
+            [/^https?:\/\/(?:www\.)*armorblog\.com(?:[\/?].*)?$/i, "https://armorgames.com/"],
+            [/^https?:\/\/(?:www\.|slitz\.)?armorstudios\.com(?:[\/?].*)?$/i, "https://armorgames.com/"],
+
+        ]
+    };
+</script>
+
+    <script src="https://cache.armorgames.com/ruffle/ruffle.js"></script>
+
+
+<div id="play-game" class="hide">
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z"></path>
+        </svg>
+
+        <p>Watch ad and play game</p>
+    </div>
+</div>
+
+        <div id="player-stage" class="">
+        <div id="player-container"></div>
+    </div>
+
+
+<div id="gamefilearea" style="height: 400px;">
+    <div id="game-ruffle" style="">
+        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="550" height="400" id="gamefile" align="middle">
+    <param name="allowScriptAccess" value="always">
+    <param name="movie" value="https://cache.armorgames.com/files/games/the-worlds-hardest-g-1043.swf?v=1373587520">
+    <param name="wmode" value="window">
+    <param name="allowfullscreen" value="false">
+    <param name="allowfullscreeninteractive" value="false">
+    <param name="fullScreenAspectRatio" value="">
+    <param name="play" value="true">
+    <param name="loop" value="true">
+    <param name="menu" value="">
+    <param name="flashvars" value="gameID=1043">
+    <param name="hasPriority" value="true">
+
+    <ruffle-embed src="https://cache.armorgames.com/files/games/the-worlds-hardest-g-1043.swf?v=1373587520" width="550" height="400" id="gamefileEmbed" name="gamefile" align="middle" wmode="window" allowfullscreen="false" allowfullscreeninteractive="false" fullscreenaspectratio="" play="true" loop="true" menu="" allowscriptaccess="always" flashvars="gameID=1043" haspriority="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer"></ruffle-embed>
+</object>
+    </div>
+</div>
+</section>
