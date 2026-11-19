@@ -1,0 +1,10 @@
+<input type="password" id="senha" placeholder="Digite sua senha">
+
+<button onclick="mostrarSenha()">Mostrar senha</button>
+
+<script>
+function mostrarSenha() {
+    const campo = document.getElementById("senha");
+    campo.type = campo.type === "password" ? "text" : "password";
+}
+</script>
