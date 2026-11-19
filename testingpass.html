@@ -1,10 +1,20 @@
-<input type="password" id="senha" placeholder="Digite sua senha">
+<input id="senha" type="password" placeholder="Senha...">
 
-<button onclick="mostrarSenha()">Mostrar senha</button>
+<button onclick="verificar()">Entrar</button>
+
+<div id="resultado"></div>
 
 <script>
-function mostrarSenha() {
-    const campo = document.getElementById("senha");
-    campo.type = campo.type === "password" ? "text" : "password";
+const palavra = "pneumonoultramicroscopicsilicovolcanoconiosis";
+
+function verificar() {
+    const senha = document.getElementById("senha").value;
+
+    if (senha === palavra) {
+        document.getElementById("resultado").innerHTML =
+        '<iframe src="https://example.com"></iframe>';
+    } else {
+        alert("Senha incorreta!");
+    }
 }
 </script>
