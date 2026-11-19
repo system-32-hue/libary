@@ -14,12 +14,15 @@ body {
 }
 input, button {
     padding: 12px;
+    margin: 5px;
+}
+#resultado {
+    margin-top: 20px;
 }
 iframe {
     width: 95%;
     height: 500px;
-    border: none;
-    margin-top: 20px;
+    border: 1px solid #555;
 }
 </style>
 </head>
@@ -28,24 +31,41 @@ iframe {
 <h2>Digite a senha</h2>
 
 <input id="senha" type="password" placeholder="Senha...">
-<button id="entrar">Entrar</button>
+<br>
+<input id="url" type="url" placeholder="https://example.com" style="width:300px">
+<br>
+<button id="entrar">Abrir iframe</button>
 
 <div id="resultado"></div>
 
 <script>
-const palavra = "123";
+const palavra = "pneumonoultramicroscopicsilicovolcanoconiosis";
 
 document.getElementById("entrar").addEventListener("click", () => {
     const senha = document.getElementById("senha").value;
+    const endereco = document.getElementById("url").value.trim();
 
-    if (senha === palavra) {
-        const iframe = document.createElement("iframe");
-        iframe.src = "https://example.com";
-
-        const resultado = document.getElementById("resultado");
-        resultado.replaceChildren(iframe);
-    } else {
+    if (senha !== palavra) {
         alert("Senha incorreta!");
+        return;
+    }
+
+    try {
+        const url = new URL(endereco);
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            alert("URL inválida!");
+            return;
+        }
+
+        const iframe = document.createElement("iframe");
+        iframe.src = url.href;
+        iframe.allowFullscreen = true;
+
+        document.getElementById("resultado").replaceChildren(iframe);
+
+    } catch {
+        alert("Digite um endereço válido!");
     }
 });
 </script>
