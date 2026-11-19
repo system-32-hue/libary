@@ -12,9 +12,8 @@ body {
     text-align: center;
     padding: 30px;
 }
-input {
+input, button {
     padding: 12px;
-    width: 300px;
 }
 iframe {
     width: 95%;
@@ -29,24 +28,26 @@ iframe {
 <h2>Digite a senha</h2>
 
 <input id="senha" type="password" placeholder="Senha...">
-
-<button onclick="verificar()">Entrar</button>
+<button id="entrar">Entrar</button>
 
 <div id="resultado"></div>
 
 <script>
-const palavra = "pneumonoultramicroscopicsilicovolcanoconiosis";
+const palavra = "123";
 
-function verificar() {
+document.getElementById("entrar").addEventListener("click", () => {
     const senha = document.getElementById("senha").value;
 
     if (senha === palavra) {
-        document.getElementById("resultado").innerHTML =
-        '<iframe src="https://example.com"></iframe>';
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://example.com";
+
+        const resultado = document.getElementById("resultado");
+        resultado.replaceChildren(iframe);
     } else {
         alert("Senha incorreta!");
     }
-}
+});
 </script>
 
 </body>
